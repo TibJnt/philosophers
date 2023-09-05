@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/philo.h"
+#include "../philo.h"
 
 int only_one_philo(t_data *data)
 {
@@ -18,15 +18,18 @@ int only_one_philo(t_data *data)
 	if (pthread_create(&data->tid[0], NULL, &run_philo_and_meals_monitor, &data->philos[0]))
 		return (handle_error(THREAD_ERROR, data));
 	pthread_detach(data->tid[0]);
-	while (data->dead == 0)
+	while (data->philo_is_dead == 0)
 		usleep(0);
     destroy_mutex(data);
     free_resources(data);
 	return (0);
 }
 
-int monitor_global_state(t_data *data)
+void *monitor_global_state(void *data_pointer)
 {
+    t_data *data;
+
+    data = (t_data *) data_pointer;
     while (data->philo_is_dead == 0)
     {
         if (data->philos_done_eating >= data->philos_nb)
@@ -39,7 +42,7 @@ int monitor_global_state(t_data *data)
     return ((void *)0);
 }
 
-int monitor_local_state(void *philo_pointer)
+void *monitor_local_state(void *philo_pointer)
 {
     t_philo	*philo;
 
@@ -60,7 +63,7 @@ int monitor_local_state(void *philo_pointer)
     return ((void *)0);
 }
 
-int run_philo_and_meals_monitor(void *philo_pointer)
+void  *run_philo_and_meals_monitor(void *philo_pointer)
 {
 	t_philo	*philo;
 

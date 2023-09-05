@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/philo.h"
+#include "../philo.h"
 
 
 int main (int argc, char **argv)
@@ -19,11 +19,11 @@ int main (int argc, char **argv)
 
     if (argc < 5 || argc > 6)
 		return (1);
-    if (check_input(argv))
+    if (check_input(argv, argc))
         return (1);
     if (initialize(argv, argc, &data))
         return (1);
-    if (data.philo_num == 1)
+    if (data.philos_nb == 1)
 		  return (only_one_philo(&data));
     if (create_threads(&data))
         return (1);

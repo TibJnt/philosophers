@@ -14,7 +14,7 @@ X = "\033[0m"
 UP = "\033[A"
 CUT = "\033[K"
 
-SRCS = src/main.c src/error.c src/input.c src/initialization \
+SRCS = src/main.c src/error.c src/input.c src/initialization.c \
 			src/threading.c src/actions.c src/time.c \
 
 OBJS = $(SRCS:.c=.o)
@@ -26,13 +26,13 @@ all: $(NAME)
 	@$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lpthread
 	@echo $(G)Created [$(NAME)]$(X)
 	
 
 clean:
-	@rm -f $(OBJECTS)
-	@echo $(R)Removed [$(OBJECTS)]$(X)
+	@rm -f $(OBJS)
+	@echo $(R)Removed [$(OBJS)]$(X)
 
 fclean: clean
 	@rm -f $(NAME)

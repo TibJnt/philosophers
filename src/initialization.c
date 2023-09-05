@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 
-#include "../lib/philo.h"
+#include "../philo.h"
 
 int init_data(int argc, char **argv, t_data *data)
 {
@@ -51,12 +51,12 @@ int	init_forks(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->philo_num)
+	while (i < data->philos_nb)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			return (handle_error(MUTEX_ERROR, data));
 		data->philos[i].l_fork = &data->forks[i];
-		data->philos[i].r_fork = &data->forks[(i - 1 + data->philo_num) % data->philo_num];
+		data->philos[i].r_fork = &data->forks[(i - 1 + data->philos_nb) % data->philos_nb];
 		i++;
 	}
 	return (0);
@@ -78,6 +78,7 @@ int init_philos(t_data *data)
             return (handle_error(MUTEX_ERROR, data));
         i++;
     }
+    return (0);
 }
 
 int initialize(char **argv, int argc, t_data *data)
@@ -88,6 +89,7 @@ int initialize(char **argv, int argc, t_data *data)
         return (1);
     if (init_forks(data))
         return (1);
-    init_philos(data);
+    if (init_philos(data))
+        return (1);
     return (0);
 }

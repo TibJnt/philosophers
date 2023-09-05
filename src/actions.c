@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/philo.h"
+#include "../philo.h"
 
 void    ft_print(char *msg, t_philo *philo)
 {
@@ -21,10 +21,10 @@ void    ft_print(char *msg, t_philo *philo)
     if (ft_strcmp(msg, DEAD) == 0 && philo->data->philo_is_dead == 0)
     {
         philo->data->philo_is_dead = 1;
-        printf("%llu %d %s\n", time, philo->id, msg);
+        printf("%lu %d %s\n", time, philo->id, msg);
     }
     if (!philo->data->philo_is_dead)
-        printf("%llu %d %s\n", time, philo->id, msg);
+        printf("%lu %d %s\n", time, philo->id, msg);
     pthread_mutex_unlock(&philo->data->write);
 }
 
@@ -56,5 +56,17 @@ void    eat(t_philo *philo)
     philo->is_eating = 0;
     pthread_mutex_unlock(&philo->lock);
     drop_forks(philo);
+}
+
+int ft_strcmp(char *s1, char *s2)
+{
+    int i;
+
+    i = 0;
+    while (s1[i] && s2[i] && s1[i] == s2[i])
+        i++;
+    if (s1[i] == '\0' && s2[i] == '\0')
+        return (0);
+    return (1);
 }
 

@@ -39,7 +39,7 @@ typedef struct s_philo
 	int				id;
 	int				eat_counter;
 	int				is_eating;
-	uint64_t		time_left_before_death;
+	u_int64_t		time_left_before_death;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
@@ -62,7 +62,7 @@ typedef struct s_data
 	pthread_mutex_t	write;
 }	t_data;
 
-int check_input(char **argv);
+int check_input(char **argv, int argc);
 int handle_error(char *msg, t_data *data); 
 int is_digit(char c);
 int initialize(char **argv, int argc, t_data *data);
@@ -71,9 +71,9 @@ void	destroy_mutex(t_data *data);
 int only_one_philo(t_data *data);
 void	ft_print(char *msg, t_philo *philo);
 int	create_threads(t_data *data);
-int	monitor_global_state(t_data *data);
-int	monitor_local_state(void *philo_pointer);
-int	run_philo_and_meals_monitor(void *philo_pointer);
+void	*monitor_global_state(void *data_pointer);
+void	*monitor_local_state(void *philo_pointer);
+void	*run_philo_and_meals_monitor(void *philo_pointer);
 int allocation(t_data *data);
 int init_philos(t_data *data);
 int	init_forks(t_data *data);
@@ -81,7 +81,8 @@ void	take_forks(t_philo *philo);
 void drop_forks(t_philo *philo);
 void    eat(t_philo *philo);
 u_int64_t get_time(void);
-int free_resources(t_data *data);
+void free_resources(t_data *data);
+int ft_strcmp(char *s1, char *s2);
 
-#endif PHILO_H
+#endif
 

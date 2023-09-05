@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/philo.h"
+#include "../philo.h"
 
 int handle_error(char *msg, t_data *data)
 {
