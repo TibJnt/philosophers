@@ -56,6 +56,7 @@ void *monitor_local_state(void *philo_pointer)
         {
             pthread_mutex_lock(&philo->data->lock);
             philo->data->philos_done_eating++;
+            philo->eat_counter++;
             pthread_mutex_unlock(&philo->data->lock);
         }
         pthread_mutex_unlock(&philo->lock);

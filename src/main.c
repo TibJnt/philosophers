@@ -27,5 +27,7 @@ int main (int argc, char **argv)
 		  return (only_one_philo(&data));
     if (create_threads(&data))
         return (1);
+    destroy_mutex(&data);
+    free_resources(&data);
     return (0);
 }
